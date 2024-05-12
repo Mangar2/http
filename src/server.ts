@@ -97,16 +97,31 @@ export class Server {
             res.end(`unknown method ${method}`);
             return;
         }
-        const url = new URL(req.url!, `http://${req.headers.host}`);
-        const path = url.pathname;
-        return this.callbacks[method]({
-            method: method.toUpperCase(),
-            payload,
-            headers: req.headers,
-            params: url.searchParams,
-            path,
-            res: res
-        });
+        if (!req.url) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end('Bad Request: No url');
+            return;
+        }
+        if (!req.headers.host) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end('Bad Request: No host header');
+            return;
+        }
+        try {
+            const url = new URL(req.url, `http://${req.headers.host}`);
+            const path = url.pathname;
+            return this.callbacks[method]({
+                method: method.toUpperCase(),
+                payload,
+                headers: req.headers,
+                params: url.searchParams,
+                path,
+                res: res
+            });
+        } catch (err) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end(err instanceof Error ? err.message : 'Unknown error');
+        }
     }
 
     /**

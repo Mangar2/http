@@ -193,7 +193,7 @@ export class Client {
             request.write(stringPayload);
             startTime = Date.now();
             request.end();
-            request.on('error', (err: unknown) => {
+            request.on('error', (err: Error) => {
                 if (this.requests[requestId] !== undefined) {
                     delete this.requests[requestId];
                 }
