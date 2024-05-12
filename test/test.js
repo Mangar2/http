@@ -9,6 +9,11 @@
  * @overview Unit tests
  */
 
-import run from './test-http-service.js';
+import test from './test-http-service.js';
+
+const run = async () => {
+    const result = await test();
+    result.showResult();
+};
 
 run();

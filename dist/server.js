@@ -76,7 +76,14 @@ export class Server {
         }
         const url = new URL(req.url, `http://${req.headers.host}`);
         const path = url.pathname;
-        return this.callbacks[method](method.toUpperCase(), payload, req.headers, url.searchParams, path, res);
+        return this.callbacks[method]({
+            method: method.toUpperCase(),
+            payload,
+            headers: req.headers,
+            params: url.searchParams,
+            path,
+            res: res
+        });
     }
     /**
      * Handles incoming Http requests and dispatches them.

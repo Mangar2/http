@@ -9,9 +9,8 @@
  * @overview
  * Provides simple http/https client and server classes
  */
-import { HttpClient } from './httpclient.js';
-import { HttpServer } from './httpserver.js';
-import { HttpsServer } from './httpsserver.js';
-import { EchoServer } from './echo-server.js';
-export { HttpClient, HttpServer, HttpsServer, EchoServer };
+export { HttpClient } from './httpclient.js';
+export { HttpServer } from './httpserver.js';
+export { HttpsServer } from './httpsserver.js';
+export { EchoServer } from './echo-server.js';
 //# sourceMappingURL=index.js.map

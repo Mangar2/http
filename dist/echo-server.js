@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2020 Volker Böhm
  */
 import { shutdown, Types } from '@mangar2/utils';
-import { HttpServer } from './httpserver.js';
+import { HttpServer } from './index.js';
 /**
  * EchoServer class that echoes back requests.
  */
@@ -45,7 +45,7 @@ export class EchoServer {
      * @param {string} path The path of the request.
      * @param {ServerResponse} res The response object.
      */
-    async echo(method, payload, headers, params, path, res) {
+    async echo({ method, payload, headers, params, path, res }) {
         if (!Types.isString(payload)) {
             res.writeHead(500, {
                 'Content-Type': 'text/plain',
@@ -83,8 +83,8 @@ export class EchoServer {
             await this._server.close();
             process.exit(0);
         });
-        this._server.on(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], async (method, payload, headers, params, path, res) => {
-            this.echo(method, payload, headers, params, path, res);
+        this._server.on(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], async (params) => {
+            this.echo(params);
         });
         this._server.on('listen', () => {
             console.log('listening');

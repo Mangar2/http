@@ -14,16 +14,16 @@ import * as https from 'https';
 type ServerResponse = http.ServerResponse;
 interface ServerOptions {
 }
-/**
- * Callback for Http(S) put, post, patch, delete, listen, or closed requests
- * @callback HttpCallback
- * @param {string} payload http payload (maybe stringified JSON)
- * @param {Object} headers headers
- * @param {string} path path name (without search parameters)
- * @param {Object} res http(s) res structure
- */
-export type HttpCallback = (method: string, payload: string, headers: http.IncomingHttpHeaders, params: URLSearchParams, path: string, res: ServerResponse) => void;
-export type HookCallback = () => void;
+export type HttpCallbackParams = {
+    method: string;
+    payload: string;
+    headers: http.IncomingHttpHeaders;
+    params: URLSearchParams;
+    path: string;
+    res: ServerResponse;
+};
+export type HttpCallback = ({ method, payload, headers, params, path, res }: HttpCallbackParams) => void | Promise<void>;
+export type HookCallback = () => void | Promise<void>;
 /**
  * @private
  * @description

@@ -7,11 +7,7 @@
  * @author Volker Böhm
  * @copyright Copyright (c) 2020 Volker Böhm
  */
-/// <reference types="node" resolution-mode="require"/>
-import { ServerResponse } from 'http';
-type URLSearchParams = {
-    toString: () => string;
-};
+import { HttpCallbackParams } from './index.js';
 /**
  * EchoServer class that echoes back requests.
  */
@@ -48,11 +44,10 @@ export declare class EchoServer {
      * @param {string} path The path of the request.
      * @param {ServerResponse} res The response object.
      */
-    echo(method: string, payload: unknown, headers: object, params: URLSearchParams, path: string, res: ServerResponse): Promise<void>;
+    echo({ method, payload, headers, params, path, res }: HttpCallbackParams): Promise<void>;
     /**
      * Starts the EchoServer.
      */
     run(): void;
     stop(): Promise<void>;
 }
-export {};

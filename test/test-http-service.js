@@ -13,8 +13,8 @@
 import { HttpClient, EchoServer } from '../dist/index.js';
 import { TestRun, getDirectory } from '@mangar2/utils';
 
-const VERBOSE = true;
-const DEBUG = true;
+const VERBOSE = false;
+const DEBUG = false;
 
 const testRun = new TestRun(VERBOSE, DEBUG);
 const echoServer = new EchoServer(0);
@@ -51,4 +51,4 @@ testRun.on('cleanup', async () => {
     echoServer.stop();
 });
 
-export default async () => await testRun.asyncRun(['test-http-cases'], getDirectory(import.meta.url), 6, 'js');
+export default async () => testRun.asyncRun(['test-http-cases'], getDirectory(import.meta.url), 6, 'js');

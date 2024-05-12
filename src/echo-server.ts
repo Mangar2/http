@@ -9,13 +9,7 @@
  */
 
 import { shutdown, Types } from '@mangar2/utils';
-import { HttpServer } from './httpserver.js';
-import { ServerResponse } from 'http';
-
-// Define the callback argument types if they are known
-type RequestPayload = unknown; // Adjust this type according to your actual payload structure
-type RequestHeaders = Record<string, string | string[] | undefined>;
-type URLSearchParams = { toString: () => string }; // Simplified type for URLSearchParams
+import { HttpServer, HttpCallbackParams } from './index.js';
 
 type Input = {
     method: string;
@@ -67,7 +61,7 @@ export class EchoServer {
      * @param {string} path The path of the request.
      * @param {ServerResponse} res The response object.
      */
-    async echo (method: string, payload: unknown, headers: object, params: URLSearchParams, path: string, res: ServerResponse): Promise<void> {
+    async echo ({ method, payload, headers, params, path, res }: HttpCallbackParams): Promise<void> {
         if (!Types.isString(payload)) {
             res.writeHead(500, {
                 'Content-Type': 'text/plain',
@@ -108,8 +102,8 @@ export class EchoServer {
         });
 
         this._server.on(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-            async (method: string, payload: RequestPayload, headers: RequestHeaders, params: URLSearchParams, path: string, res: ServerResponse) => {
-                this.echo(method, payload, headers, params, path, res);
+            async (params: HttpCallbackParams) => {
+                this.echo(params);
             });
 
         this._server.on('listen', () => {
