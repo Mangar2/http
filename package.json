@@ -1,0 +1,39 @@
+{
+  "name": "@mangar2/httpservice",
+  "version": "3.0.0",
+  "description": "implements a simple http/https client/server",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json",
+    "test": "node test/test.js",
+    "doku": "js2md . README.md",
+    "lint": "eslint --ext .js,.ts */**",
+    "lint:fix": "eslint --fix --ext .js,.ts */**",
+    "prepublishOnly": "npm run build && npm run lint && npm test && npm run doku",
+    "publish": "npm publish --access public"
+  },
+  "keywords": [
+    "http",
+    "https",
+    "client",
+    "server"
+  ],
+  "author": "Volker Böhm",
+  "license": "LGPL-3.0-or-later",
+  "homepage": "https://github.com/Mangar2/http-service",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mangar2/http-service"
+  },
+  "dependencies": {
+    "@mangar2/utils": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "20.10.5",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.57.0"
+  }
+}
